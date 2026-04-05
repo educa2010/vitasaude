@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Vita Saúde Clínica Integrada — Excelência em saúde, estética e bem-estar em São Paulo."/>
+  <meta property="og:title" content="Vita Saúde — Cuidando da sua saúde com excelência"/>
+  <title>Vita Saúde — Clínica Integrada</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
+<style>
+/* ================================================================
+   TOKENS
+================================================================ */
+:root{
+  --navy:#0B1D37; --navy-mid:#132952;
+  --blue:#1A56DB; --blue-soft:#EEF2FF;
+  --green:#059669; --green-mid:#10B981; --green-light:#34D399; --green-pale:#ECFDF5;
+  --gold:#D4A853;
+  --white:#fff; --off:#F9FAFB;
+  --g100:#F3F4F6; --g200:#E5E7EB; --g300:#D1D5DB;
+  --g400:#9CA3AF; --g500:#6B7280; --g600:#4B5563; --g800:#1F2937;
+
+  --fd:'Playfair Display',Georgia,serif;
+  --fb:'Plus Jakarta Sans',system-ui,sans-serif;
+
+  --sh-sm:0 2px 12px rgba(11,29,55,.08);
+  --sh-md:0 8px 32px rgba(11,29,55,.11);
+  --sh-lg:0 20px 60px rgba(11,29,55,.14);
+  --sh-g:0 8px 28px rgba(5,150,105,.30);
+  --sh-b:0 8px 28px rgba(26,86,219,.25);
+
+  --r-sm:8px; --r-md:14px; --r-lg:20px; --r-xl:28px;
+  --ease:cubic-bezier(.4,0,.2,1); --dur:.30s;
+}
+
+/* ================================================================
+   RESET
+================================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);color:var(--g800);background:var(--white);overflow-x:hidden;line-height:1.6}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:none;background:none;font-family:var(--fb)}
+ul{list-style:none}
+input,select,textarea{font-family:var(--fb)}
+
+/* ================================================================
+   UTILITIES
+================================================================ */
+.container{width:100%;max-width:1180px;margin:0 auto;padding:0 24px}
+
+/* chip / section label */
+.chip{display:inline-flex;align-items:center;gap:8px;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--green);margin-bottom:14px}
+.chip::before{content:'';width:20px;height:2px;background:var(--green);border-radius:2px;flex-shrink:0}
+.chip-c{justify-content:center}.chip-c::before{display:none}.chip-c::after{content:'';width:20px;height:2px;background:var(--green);border-radius:2px;flex-shrink:0}
+.chip-lt{color:rgba(255,255,255,.7)}.chip-lt::before{background:var(--green-light)}
+
+/* heading */
+.h2{font-family:var(--fd);font-size:clamp(1.9rem,3.8vw,3rem);font-weight:700;line-height:1.18;color:var(--navy)}
+.h2-w{color:#fff}
+.lead{font-size:1.0625rem;color:var(--g500);line-height:1.8;margin-top:12px;max-width:560px}
+.lead-c{margin-inline:auto;text-align:center}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:9px;padding:13px 26px;border-radius:50px;font-size:.9375rem;font-weight:600;white-space:nowrap;cursor:pointer;transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease),background var(--dur) var(--ease)}
+.btn:hover{transform:translateY(-2px)}
+.btn-green{background:var(--green);color:#fff;box-shadow:var(--sh-g)}
+.btn-green:hover{background:#048059;box-shadow:0 14px 36px rgba(5,150,105,.38)}
+.btn-ghost{border:2px solid rgba(255,255,255,.35);color:rgba(255,255,255,.92)}
+.btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.09)}
+.btn-white{background:#fff;color:var(--green);font-weight:700;box-shadow:0 8px 28px rgba(0,0,0,.14)}
+.btn-white:hover{box-shadow:0 14px 36px rgba(0,0,0,.2)}
+.btn-navy{background:var(--navy);color:#fff;box-shadow:var(--sh-sm)}
+.btn-navy:hover{background:#0e2847}
+
+/* reveal on scroll */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.rv.d1{transition-delay:.10s}.rv.d2{transition-delay:.20s}.rv.d3{transition-delay:.30s}.rv.d4{transition-delay:.40s}
+
+/* ================================================================
+   NAVBAR  — BUG FIX: text starts white (over dark hero), goes navy on scroll
+================================================================ */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  padding:18px 0;
+  transition:background var(--dur) var(--ease),box-shadow var(--dur) var(--ease),padding var(--dur) var(--ease);
+}
+/* solid state (scrolled) */
+#nav.solid{background:rgba(255,255,255,.97);backdrop-filter:blur(20px);box-shadow:var(--sh-sm);padding:12px 0}
+
+.nav-in{display:flex;align-items:center;justify-content:space-between}
+
+/* brand */
+.brand{display:flex;align-items:center;gap:10px}
+.brand-ico{width:40px;height:40px;flex-shrink:0;background:linear-gradient(135deg,var(--blue),var(--green));border-radius:10px;display:grid;place-items:center}
+.brand-ico svg{width:20px;height:20px}
+.brand-name{font-family:var(--fd);font-size:1.25rem;font-weight:700;line-height:1;
+  color:#fff; /* white over dark hero */
+  transition:color var(--dur)}
+.brand-sub{font-size:.58rem;color:rgba(255,255,255,.55);letter-spacing:.1em;text-transform:uppercase;margin-top:2px;transition:color var(--dur)}
+#nav.solid .brand-name{color:var(--navy)}
+#nav.solid .brand-sub{color:var(--g400)}
+
+/* links */
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a{font-size:.875rem;font-weight:500;color:rgba(255,255,255,.8);transition:color var(--dur)}
+.nav-links a:hover{color:#fff}
+#nav.solid .nav-links a{color:var(--g600)}
+#nav.solid .nav-links a:hover{color:var(--navy)}
+
+/* cta button */
+.nav-cta{padding:10px 22px;border-radius:50px;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.35);color:#fff;font-size:.875rem;font-weight:600;transition:background var(--dur),border-color var(--dur),transform var(--dur),box-shadow var(--dur),color var(--dur)}
+.nav-cta:hover{background:rgba(255,255,255,.25);transform:translateY(-1px)}
+#nav.solid .nav-cta{background:var(--navy);border-color:var(--navy);color:#fff}
+#nav.solid .nav-cta:hover{background:var(--blue);box-shadow:var(--sh-b)}
+
+/* hamburger — BUG FIX: white lines over dark hero, dark when scrolled */
+.ham{display:none;flex-direction:column;gap:5px;width:26px;cursor:pointer;padding:4px 0;background:none;border:none}
+.ham span{display:block;height:2px;background:#fff;border-radius:2px;transition:transform var(--dur) var(--ease),opacity var(--dur),background var(--dur)}
+#nav.solid .ham span{background:var(--navy)}
+.ham.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.ham.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.ham.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* drawer */
+.drawer{position:fixed;inset:0;z-index:850;background:#fff;display:flex;flex-direction:column;gap:4px;padding:100px 28px 40px;transform:translateX(100%);transition:transform .38s var(--ease)}
+.drawer.open{transform:translateX(0)}
+.drawer a{font-family:var(--fd);font-size:1.5rem;color:var(--navy);padding:10px 0;border-bottom:1px solid var(--g100)}
+.drawer-wa{margin-top:20px;color:var(--green)!important}
+
+/* ================================================================
+   HERO
+================================================================ */
+.hero{min-height:100vh;background:linear-gradient(150deg,var(--navy) 0%,#0f2345 60%,#0c2040 100%);display:flex;align-items:center;padding:130px 0 90px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:48px 48px;pointer-events:none}
+.hero-glow{position:absolute;border-radius:50%;pointer-events:none}
+.glow1{width:650px;height:650px;top:-180px;right:-120px;background:radial-gradient(circle,rgba(5,150,105,.15),transparent 70%)}
+.glow2{width:400px;height:400px;bottom:-80px;left:-60px;background:radial-gradient(circle,rgba(26,86,219,.12),transparent 70%)}
+
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;position:relative}
+
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.25);color:var(--green-light);padding:6px 14px;border-radius:50px;font-size:.75rem;font-weight:600;letter-spacing:.04em;margin-bottom:22px}
+.pdot{width:7px;height:7px;background:var(--green-light);border-radius:50%;animation:pdot 2.2s ease-in-out infinite}
+@keyframes pdot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(1.5)}}
+
+.hero-title{font-family:var(--fd);font-size:clamp(2.3rem,5vw,4rem);font-weight:700;color:#fff;line-height:1.12;letter-spacing:-.01em;margin-bottom:20px}
+.hero-title em{color:var(--green-light);font-style:italic}
+.hero-sub{font-size:1.0625rem;color:rgba(255,255,255,.6);line-height:1.78;max-width:470px;margin-bottom:38px}
+.hero-btns{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:52px}
+.hero-stats{display:flex;gap:36px;border-top:1px solid rgba(255,255,255,.09);padding-top:32px;flex-wrap:wrap}
+.stat-n{font-family:var(--fd);font-size:2rem;font-weight:700;color:#fff;line-height:1}
+.stat-l{font-size:.78rem;color:rgba(255,255,255,.45);margin-top:3px}
+
+/* hero visual */
+.hero-vis{position:relative;display:flex;justify-content:center}
+.card-wrap{width:100%;max-width:440px;border-radius:var(--r-xl);overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,.45)}
+.hero-illo{width:100%;aspect-ratio:9/11;background:linear-gradient(160deg,#163a73 0%,#0d264e 50%,#091d3a 100%);display:flex;align-items:flex-end;justify-content:center;position:relative;overflow:hidden}
+.hero-illo::before{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(16,185,129,.18),transparent 70%);top:50%;left:50%;transform:translate(-50%,-54%)}
+.doc-svg{width:80%;position:relative;z-index:2}
+
+/* floating cards — BUG FIX: use will-change and correct z-index */
+.fcard{position:absolute;background:#fff;border-radius:var(--r-md);padding:12px 16px;box-shadow:var(--sh-lg);min-width:155px;will-change:transform;z-index:10}
+.fcard-a{bottom:12%;left:-13%;animation:lev 4s ease-in-out infinite}
+.fcard-b{top:12%;right:-9%;animation:lev 4s ease-in-out 1.8s infinite}
+@keyframes lev{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.fc-ico{font-size:1.2rem;margin-bottom:3px}
+.fc-lbl{font-size:.62rem;color:var(--g400);text-transform:uppercase;letter-spacing:.07em}
+.fc-val{font-family:var(--fd);font-size:1.3rem;font-weight:700;color:var(--navy);line-height:1.1}
+.fc-sub{font-size:.68rem;color:var(--green);font-weight:600;margin-top:1px}
+
+/* ================================================================
+   TRUST BAR
+================================================================ */
+.trust-bar{background:var(--g100);border-bottom:1px solid var(--g200);padding:16px 0}
+.trust-in{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:32px}
+.ti{display:flex;align-items:center;gap:7px;font-size:.77rem;font-weight:600;color:var(--g500)}
+.ti svg{width:15px;height:15px;flex-shrink:0;fill:none;stroke:var(--blue);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ================================================================
+   HOW IT WORKS — BUG FIX: connector line hidden on mobile
+================================================================ */
+.how{padding:110px 0;background:var(--white)}
+.how-hdr{text-align:center;margin-bottom:60px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);position:relative}
+.steps::before{content:'';position:absolute;top:35px;left:calc(16.66% + 16px);right:calc(16.66% + 16px);height:2px;background:linear-gradient(90deg,var(--green),var(--blue));opacity:.2;pointer-events:none}
+.step{text-align:center;padding:0 28px;position:relative}
+.step-num{width:70px;height:70px;margin:0 auto 22px;background:linear-gradient(135deg,var(--blue),var(--green));border-radius:50%;display:grid;place-items:center;font-family:var(--fd);font-size:1.55rem;font-weight:700;color:#fff;box-shadow:0 8px 24px rgba(26,86,219,.28);position:relative;z-index:1}
+.step-t{font-weight:700;color:var(--navy);font-size:1rem;margin-bottom:10px}
+.step-d{font-size:.875rem;color:var(--g500);line-height:1.7}
+
+/* ================================================================
+   ABOUT — BUG FIX: badge safe on all screen sizes
+================================================================ */
+.about{padding:110px 0;background:var(--off)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+.about-vis{position:relative;padding-bottom:28px}/* padding so badge doesn't clip */
+.about-main{background:linear-gradient(135deg,var(--navy-mid),var(--navy));border-radius:var(--r-xl);padding:36px 28px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.mic{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-md);padding:18px 12px;text-align:center;transition:background var(--dur),transform var(--dur)}
+.mic:hover{background:rgba(255,255,255,.13);transform:translateY(-3px)}
+.mic svg{margin:0 auto 9px;display:block}
+.mic p{font-size:.73rem;color:rgba(255,255,255,.65);font-weight:500;line-height:1.3}
+
+.about-badge{
+  /* BUG FIX: use bottom instead of negative offset so it stays inside .about-vis padding */
+  position:absolute;right:0;bottom:0;
+  background:#fff;border-radius:var(--r-md);padding:14px 18px;box-shadow:var(--sh-lg);
+  display:flex;align-items:center;gap:12px;min-width:180px
+}
+.ab-ico{width:44px;height:44px;flex-shrink:0;background:var(--green-pale);border-radius:9px;display:grid;place-items:center}
+.ab-n{font-family:var(--fd);font-size:1.5rem;font-weight:700;color:var(--navy);line-height:1}
+.ab-t{font-size:.7rem;color:var(--g400);margin-top:3px}
+
+.about-feats{display:flex;flex-direction:column;gap:14px;margin-top:26px}
+.feat{display:flex;align-items:flex-start;gap:13px;padding:16px;border-radius:var(--r-md);border:1.5px solid var(--g200);transition:border-color var(--dur),box-shadow var(--dur),transform var(--dur)}
+.feat:hover{border-color:var(--green);box-shadow:var(--sh-sm);transform:translateX(4px)}
+.feat-ico{width:40px;height:40px;flex-shrink:0;background:var(--green-pale);border-radius:8px;display:grid;place-items:center}
+.feat-ico svg{width:18px;height:18px;fill:none;stroke:var(--green);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.feat-t{font-weight:700;font-size:.88rem;color:var(--navy);margin-bottom:3px}
+.feat-d{font-size:.83rem;color:var(--g500);line-height:1.6}
+
+/* ================================================================
+   SERVICES
+================================================================ */
+.services{padding:110px 0;background:var(--white)}
+.svc-hdr{text-align:center;margin-bottom:52px}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.svc{background:var(--off);border-radius:var(--r-lg);padding:32px 24px;border:1.5px solid var(--g100);position:relative;overflow:hidden;transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease),border-color var(--dur);cursor:default}
+.svc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--green));transform:scaleX(0);transform-origin:left;transition:transform .42s var(--ease)}
+.svc:hover{transform:translateY(-5px);box-shadow:var(--sh-md);border-color:transparent}
+.svc:hover::after{transform:scaleX(1)}
+.svc-ico{width:56px;height:56px;border-radius:13px;display:grid;place-items:center;margin-bottom:18px}
+.svc-ico svg{width:24px;height:24px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* per-card icon colors */
+.svc:nth-child(1) .svc-ico{background:#EEF2FF}.svc:nth-child(1) .svc-ico svg{stroke:#1A56DB}
+.svc:nth-child(2) .svc-ico{background:#ECFDF5}.svc:nth-child(2) .svc-ico svg{stroke:#059669}
+.svc:nth-child(3) .svc-ico{background:#FDF4FF}.svc:nth-child(3) .svc-ico svg{stroke:#9333EA}
+.svc:nth-child(4) .svc-ico{background:#FFF7ED}.svc:nth-child(4) .svc-ico svg{stroke:#EA580C}
+.svc:nth-child(5) .svc-ico{background:#FFF1F2}.svc:nth-child(5) .svc-ico svg{stroke:#E11D48}
+.svc:nth-child(6) .svc-ico{background:#F0FDFA}.svc:nth-child(6) .svc-ico svg{stroke:#0D9488}
+.svc-t{font-weight:700;font-size:.98rem;color:var(--navy);margin-bottom:8px}
+.svc-d{font-size:.845rem;color:var(--g500);line-height:1.68}
+.svc-lnk{display:inline-flex;align-items:center;gap:5px;margin-top:13px;font-size:.78rem;font-weight:700;color:var(--blue);transition:gap var(--dur),color var(--dur)}
+.svc:hover .svc-lnk{gap:9px;color:var(--green)}
+
+/* ================================================================
+   TEAM
+================================================================ */
+.team{padding:110px 0;background:var(--off)}
+.team-hdr{text-align:center;margin-bottom:52px}
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.doc{background:#fff;border-radius:var(--r-lg);overflow:hidden;border:1.5px solid var(--g100);text-align:center;transition:transform var(--dur),box-shadow var(--dur)}
+.doc:hover{transform:translateY(-5px);box-shadow:var(--sh-md)}
+.doc-av{width:100%;aspect-ratio:1;display:flex;align-items:flex-end;justify-content:center;position:relative;overflow:hidden}
+.doc:nth-child(1) .doc-av{background:linear-gradient(160deg,#DBEAFE,#BFDBFE)}
+.doc:nth-child(2) .doc-av{background:linear-gradient(160deg,#D1FAE5,#A7F3D0)}
+.doc:nth-child(3) .doc-av{background:linear-gradient(160deg,#EDE9FE,#DDD6FE)}
+.doc:nth-child(4) .doc-av{background:linear-gradient(160deg,#FFE4E6,#FECDD3)}
+.doc-av svg{width:75%;position:relative;z-index:2}
+.doc-info{padding:16px 18px 22px}
+.doc-name{font-family:var(--fd);font-size:1rem;font-weight:700;color:var(--navy)}
+.doc-spec{font-size:.76rem;color:var(--green);font-weight:600;margin:3px 0 6px}
+.doc-crm{font-size:.7rem;color:var(--g400)}
+
+/* ================================================================
+   DIFFERENTIALS
+================================================================ */
+.diff{padding:110px 0;background:var(--navy);position:relative;overflow:hidden}
+.diff::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='64' height='64' viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M32 0L0 32l32 32 32-32z' fill='%23ffffff' fill-opacity='0.02'/%3E%3C/svg%3E");pointer-events:none}
+.diff-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:80px;align-items:center;position:relative}
+.diff-list{display:flex;flex-direction:column;gap:12px;margin-top:34px}
+.di{display:flex;align-items:flex-start;gap:13px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:var(--r-md);padding:16px;transition:background var(--dur),border-color var(--dur)}
+.di:hover{background:rgba(16,185,129,.09);border-color:rgba(16,185,129,.22)}
+.di-chk{width:32px;height:32px;flex-shrink:0;background:rgba(16,185,129,.14);border:1.5px solid rgba(16,185,129,.3);border-radius:7px;display:grid;place-items:center}
+.di-chk svg{width:14px;height:14px;fill:none;stroke:var(--green-light);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.di-t{font-weight:700;color:#fff;font-size:.88rem;margin-bottom:2px}
+.di-d{font-size:.82rem;color:rgba(255,255,255,.48);line-height:1.58}
+.diff-nums{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.dn{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:var(--r-lg);padding:24px 18px;text-align:center;transition:background var(--dur),transform var(--dur)}
+.dn:hover{background:rgba(255,255,255,.09);transform:scale(1.02)}
+.dn.acc{background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.22);grid-column:span 2}
+.dn-n{font-family:var(--fd);font-size:3rem;font-weight:700;color:#fff;line-height:1}
+.dn.acc .dn-n{font-size:3.8rem}
+.dn-g{color:var(--green-light)}
+.dn-l{font-size:.76rem;color:rgba(255,255,255,.43);margin-top:6px}
+
+/* ================================================================
+   TESTIMONIALS
+================================================================ */
+.testi{padding:110px 0;background:var(--white)}
+.testi-hdr{text-align:center;margin-bottom:52px}
+.testi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.tc{border-radius:var(--r-xl);padding:32px;border:1.5px solid var(--g100);transition:transform var(--dur),box-shadow var(--dur)}
+.tc:hover{transform:translateY(-4px);box-shadow:var(--sh-md)}
+.tc-dark{background:linear-gradient(140deg,var(--navy),#152e56);border-color:transparent}
+.tc-q{font-family:var(--fd);font-size:4rem;line-height:.55;color:var(--green);opacity:.3;margin-bottom:10px}
+.tc-dark .tc-q{opacity:.55}
+.stars{display:flex;gap:3px;margin-bottom:11px}
+.star{color:#FBBF24;font-size:.82rem}
+.tc-txt{font-size:.88rem;color:var(--g600);line-height:1.78;margin-bottom:20px;font-style:italic}
+.tc-dark .tc-txt{color:rgba(255,255,255,.73)}
+.tc-auth{display:flex;align-items:center;gap:11px}
+.tc-av{width:44px;height:44px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;font-weight:800;font-size:.95rem}
+.tc-name{font-weight:700;font-size:.88rem;color:var(--navy)}
+.tc-dark .tc-name{color:#fff}
+.tc-role{font-size:.73rem;color:var(--g400);margin-top:2px}
+.tc-dark .tc-role{color:rgba(255,255,255,.38)}
+
+/* ================================================================
+   CTA
+================================================================ */
+.cta{padding:100px 0;background:linear-gradient(135deg,var(--green),#047857);position:relative;overflow:hidden}
+.cta::before{content:'';position:absolute;top:-160px;right:-160px;width:420px;height:420px;border-radius:50%;background:rgba(255,255,255,.07)}
+.cta::after{content:'';position:absolute;bottom:-100px;left:-100px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.05)}
+.cta-in{text-align:center;position:relative;z-index:1}
+.cta-t{font-family:var(--fd);font-size:clamp(1.9rem,4vw,3.2rem);font-weight:700;color:#fff;line-height:1.18;margin-bottom:14px}
+.cta-d{font-size:1.0625rem;color:rgba(255,255,255,.8);max-width:520px;margin:0 auto 34px;line-height:1.72}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* ================================================================
+   FORM / CONTACT
+================================================================ */
+.contact{padding:110px 0;background:var(--off)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.ct-trust{display:flex;flex-direction:column;gap:13px;margin-top:30px}
+.ct-row{display:flex;align-items:center;gap:11px}
+.ct-ico{width:34px;height:34px;background:var(--green-pale);border-radius:8px;display:grid;place-items:center;flex-shrink:0}
+.ct-ico svg{width:16px;height:16px;fill:none;stroke:var(--green);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ct-txt{font-size:.86rem;color:var(--g600)}
+
+/* form box */
+.fbox{background:#fff;border-radius:var(--r-xl);padding:36px;box-shadow:var(--sh-md);border:1.5px solid var(--g200)}
+.fbox-t{font-weight:700;color:var(--navy);font-size:1.15rem;margin-bottom:5px}
+.fbox-s{font-size:.82rem;color:var(--g400);margin-bottom:24px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.fg{margin-bottom:15px}
+.fg label{display:block;font-size:.76rem;font-weight:700;color:var(--g600);margin-bottom:5px;letter-spacing:.02em}
+/* BUG FIX: consistent focus ring, no double outline */
+.fg input,.fg select,.fg textarea{
+  width:100%;padding:11px 13px;
+  border:1.5px solid var(--g200);border-radius:var(--r-sm);
+  font-size:.9375rem;color:var(--g800);background:var(--off);
+  outline:none;appearance:none;-webkit-appearance:none;
+  transition:border-color var(--dur),box-shadow var(--dur),background var(--dur)
+}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(5,150,105,.12);background:#fff}
+/* BUG FIX: select arrow visible on all browsers */
+.fg select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px}
+.fg textarea{resize:vertical;min-height:88px}
+.ferr{color:#E11D48;font-size:.78rem;margin-top:4px;font-weight:600;display:none}
+.ferr.show{display:block}
+.btn-sub{width:100%;padding:13px;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;border-radius:var(--r-sm);font-size:.9375rem;font-weight:700;font-family:var(--fb);box-shadow:var(--sh-b);margin-top:6px;transition:transform var(--dur),box-shadow var(--dur),opacity var(--dur);cursor:pointer}
+.btn-sub:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(26,86,219,.35)}
+.btn-sub:disabled{opacity:.6;cursor:not-allowed;transform:none}
+
+#form-ok{display:none;text-align:center;padding:30px 10px}
+.ok-ico{font-size:3rem;margin-bottom:10px}
+#form-ok h3{font-family:var(--fd);font-size:1.6rem;color:var(--navy);margin-bottom:7px}
+#form-ok p{font-size:.88rem;color:var(--g500);line-height:1.7}
+
+/* ================================================================
+   LOCATION
+================================================================ */
+.loc{padding:110px 0;background:var(--white)}
+.loc-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:start}
+.map-wrap{border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--sh-md);border:1.5px solid var(--g100);aspect-ratio:4/3}
+.map-wrap iframe{width:100%;height:100%;border:none;display:block}
+.loc-cards{display:flex;flex-direction:column;gap:14px}
+.lc{display:flex;gap:13px;padding:18px;border-radius:var(--r-md);border:1.5px solid var(--g200);transition:border-color var(--dur),box-shadow var(--dur)}
+.lc:hover{border-color:var(--green);box-shadow:var(--sh-sm)}
+.lc-ico{width:40px;height:40px;flex-shrink:0;background:var(--green-pale);border-radius:8px;display:grid;place-items:center}
+.lc-ico svg{width:18px;height:18px;fill:none;stroke:var(--green);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.lc-t{font-weight:700;font-size:.88rem;color:var(--navy);margin-bottom:4px}
+.lc-d{font-size:.83rem;color:var(--g500);line-height:1.65}
+.hrs{display:flex;flex-direction:column;gap:6px;margin-top:3px}
+.hr{display:flex;justify-content:space-between;font-size:.81rem}
+.hr-day{color:var(--g500)}.hr-t{font-weight:700;color:var(--navy)}.hr-off{color:var(--g400)}
+
+/* ================================================================
+   FOOTER
+================================================================ */
+footer{background:var(--navy);padding:64px 0 0}
+.ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;padding-bottom:48px}
+.ft-brand{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.ft-brand-name{font-family:var(--fd);font-size:1.2rem;font-weight:700;color:#fff}
+.ft-brand-sub{font-size:.58rem;color:var(--g400);letter-spacing:.1em;text-transform:uppercase;margin-top:2px}
+.ft-txt{font-size:.83rem;color:rgba(255,255,255,.38);line-height:1.75;max-width:260px;margin-top:4px}
+.ft-cfm{display:inline-flex;align-items:center;gap:7px;margin-top:15px;background:rgba(16,185,129,.09);border:1px solid rgba(16,185,129,.2);border-radius:7px;padding:7px 12px}
+.ft-cfm svg{width:12px;height:12px;fill:var(--green-light)}
+.ft-cfm span{font-size:.7rem;color:var(--green-light);font-weight:600}
+.ft-social{display:flex;gap:9px;margin-top:17px}
+.soc{width:34px;height:34px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:7px;display:grid;place-items:center;transition:background var(--dur),border-color var(--dur)}
+.soc:hover{background:rgba(16,185,129,.2);border-color:rgba(16,185,129,.4)}
+.soc svg{width:14px;height:14px;fill:rgba(255,255,255,.58)}
+.ft-col h4{font-weight:700;font-size:.83rem;color:#fff;margin-bottom:16px;letter-spacing:.04em}
+.ft-links{display:flex;flex-direction:column;gap:10px}
+.ft-links a{font-size:.82rem;color:rgba(255,255,255,.4);transition:color var(--dur)}
+.ft-links a:hover{color:var(--green-light)}
+.ft-contact{display:flex;flex-direction:column;gap:10px}
+.fci{display:flex;align-items:center;gap:8px;font-size:.81rem;color:rgba(255,255,255,.4)}
+.fci svg{width:13px;height:13px;fill:var(--green);flex-shrink:0}
+.ft-bot{border-top:1px solid rgba(255,255,255,.07);padding:22px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.ft-bot p{font-size:.76rem;color:rgba(255,255,255,.25)}
+/* BUG FIX: cursor pointer on copyright for admin easter egg */
+.ft-bot p span{cursor:default}
+.ft-bot-links{display:flex;gap:20px;flex-wrap:wrap}
+.ft-bot-links a{font-size:.76rem;color:rgba(255,255,255,.25);transition:color var(--dur)}
+.ft-bot-links a:hover{color:rgba(255,255,255,.6)}
+
+/* ================================================================
+   WHATSAPP FLOAT
+================================================================ */
+.wa{position:fixed;bottom:26px;right:26px;z-index:800;width:54px;height:54px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 8px 28px rgba(37,211,102,.5);transition:transform var(--dur),box-shadow var(--dur);animation:wab 3.5s ease-in-out 3s infinite}
+.wa:hover{transform:scale(1.1);box-shadow:0 12px 36px rgba(37,211,102,.65);animation:none}
+.wa svg{width:27px;height:27px;fill:#fff}
+@keyframes wab{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.wa-tip{position:absolute;right:64px;background:var(--navy);color:#fff;font-size:.73rem;font-weight:600;padding:7px 12px;border-radius:7px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity var(--dur)}
+.wa-tip::after{content:'';position:absolute;right:-5px;top:50%;transform:translateY(-50%);border:5px solid transparent;border-right:none;border-left-color:var(--navy)}
+.wa:hover .wa-tip{opacity:1}
+
+/* ================================================================
+   RESPONSIVE
+================================================================ */
+@media(max-width:1024px){
+  .nav-links,.nav-cta{display:none}
+  .ham{display:flex}
+  .team-grid{grid-template-columns:repeat(2,1fr)}
+  .ft-grid{grid-template-columns:1fr 1fr;gap:32px}
+}
+@media(max-width:768px){
+  .hero-grid{grid-template-columns:1fr;text-align:center;gap:48px}
+  .hero-vis{order:-1}
+  .hero-sub,.hero-badge{margin-inline:auto}
+  .hero-btns,.hero-stats{justify-content:center}
+  .fcard-a,.fcard-b{display:none}
+  .steps{grid-template-columns:1fr;gap:32px}
+  .steps::before{display:none}/* BUG FIX: hide connector on mobile */
+  .about-grid{grid-template-columns:1fr}
+  .about-vis{padding-bottom:80px}/* more room for badge */
+  .svc-grid{grid-template-columns:1fr 1fr}
+  .diff-grid{grid-template-columns:1fr}
+  .testi-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .loc-grid{grid-template-columns:1fr}
+  .ft-grid{grid-template-columns:1fr}
+  .ft-bot{flex-direction:column;text-align:center}
+  .ft-bot-links{justify-content:center}
+}
+@media(max-width:540px){
+  .svc-grid{grid-template-columns:1fr}
+  .team-grid{grid-template-columns:1fr 1fr}
+  .frow{grid-template-columns:1fr}
+  .fbox{padding:24px 16px}
+  .tc{padding:22px 18px}
+}
+
+/* ================================================================
+   ████████  ADMIN PANEL  ████████
+================================================================ */
+#admin-overlay{
+  display:none;position:fixed;inset:0;z-index:9999;
+  background:#F1F5F9;font-family:var(--fb);overflow-y:auto
+}
+#admin-overlay.show{display:block}
+
+/* Admin login */
+.adm-login{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,var(--navy) 0%,#1a3a6e 100%);
+  padding:24px
+}
+.adm-login-box{
+  background:#fff;border-radius:20px;padding:44px 40px;width:100%;max-width:400px;
+  box-shadow:0 24px 64px rgba(0,0,0,.25);text-align:center
+}
+.adm-login-ico{
+  width:64px;height:64px;background:linear-gradient(135deg,var(--blue),var(--green));
+  border-radius:16px;display:grid;place-items:center;margin:0 auto 20px
+}
+.adm-login-ico svg{width:30px;height:30px}
+.adm-login-box h2{font-family:var(--fd);font-size:1.7rem;color:var(--navy);margin-bottom:6px}
+.adm-login-box p{font-size:.84rem;color:var(--g500);margin-bottom:28px}
+.adm-pw-wrap{position:relative;margin-bottom:16px}
+.adm-pw-wrap input{
+  width:100%;padding:12px 44px 12px 14px;
+  border:1.5px solid var(--g200);border-radius:var(--r-sm);
+  font-size:.9375rem;outline:none;
+  transition:border-color var(--dur),box-shadow var(--dur)
+}
+.adm-pw-wrap input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(26,86,219,.12)}
+.adm-pw-toggle{
+  position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;color:var(--g400);
+  display:grid;place-items:center;width:24px;height:24px
+}
+.adm-pw-toggle svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.adm-btn-login{
+  width:100%;padding:13px;background:linear-gradient(135deg,var(--navy),var(--blue));
+  color:#fff;border-radius:var(--r-sm);font-size:.9375rem;font-weight:700;
+  font-family:var(--fb);cursor:pointer;box-shadow:var(--sh-b);
+  transition:transform var(--dur),box-shadow var(--dur)
+}
+.adm-btn-login:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(26,86,219,.35)}
+.adm-login-err{color:#E11D48;font-size:.8rem;font-weight:600;margin-top:10px;display:none}
+
+/* Admin dashboard */
+.adm-dash{display:none;min-height:100vh}
+.adm-dash.show{display:block}
+
+/* top bar */
+.adm-top{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,255,255,.97);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--g200);padding:14px 24px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px
+}
+.adm-top-brand{display:flex;align-items:center;gap:10px}
+.adm-top-brand .brand-ico{width:36px;height:36px;border-radius:8px}
+.adm-top-brand .brand-ico svg{width:18px;height:18px}
+.adm-top-title{font-weight:700;color:var(--navy);font-size:.95rem}
+.adm-top-sub{font-size:.72rem;color:var(--g400);margin-top:1px}
+.adm-top-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.adm-btn-xs{padding:8px 16px;border-radius:50px;font-size:.78rem;font-weight:600;font-family:var(--fb);cursor:pointer;transition:background var(--dur),transform var(--dur);border:none}
+.adm-btn-xs:hover{transform:translateY(-1px)}
+.abx-green{background:var(--green);color:#fff}
+.abx-green:hover{background:#048059}
+.abx-gray{background:var(--g100);color:var(--g600)}
+.abx-gray:hover{background:var(--g200)}
+.abx-red{background:#FEF2F2;color:#DC2626;border:1px solid #FECACA}
+.abx-red:hover{background:#FEE2E2}
+.adm-logout{background:none;border:1.5px solid var(--g200);color:var(--g600);padding:8px 16px;border-radius:50px;font-size:.78rem;font-weight:600;font-family:var(--fb);cursor:pointer;transition:border-color var(--dur),color var(--dur)}
+.adm-logout:hover{border-color:var(--navy);color:var(--navy)}
+
+/* main content */
+.adm-main{padding:28px 24px;max-width:1280px;margin:0 auto}
+
+/* stat cards */
+.adm-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.adm-stat{background:#fff;border-radius:var(--r-lg);padding:22px 20px;border:1.5px solid var(--g100);position:relative;overflow:hidden}
+.adm-stat::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.adm-stat:nth-child(1)::before{background:linear-gradient(90deg,var(--blue),#60A5FA)}
+.adm-stat:nth-child(2)::before{background:linear-gradient(90deg,#F59E0B,#FCD34D)}
+.adm-stat:nth-child(3)::before{background:linear-gradient(90deg,var(--green),var(--green-light))}
+.adm-stat:nth-child(4)::before{background:linear-gradient(90deg,#8B5CF6,#C4B5FD)}
+.adm-stat-n{font-family:var(--fd);font-size:2.4rem;font-weight:700;color:var(--navy);line-height:1;margin-bottom:4px}
+.adm-stat-l{font-size:.78rem;color:var(--g500);font-weight:500}
+.adm-stat-ico{position:absolute;right:18px;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:10px;display:grid;place-items:center}
+.adm-stat:nth-child(1) .adm-stat-ico{background:#EEF2FF}
+.adm-stat:nth-child(2) .adm-stat-ico{background:#FFFBEB}
+.adm-stat:nth-child(3) .adm-stat-ico{background:#ECFDF5}
+.adm-stat:nth-child(4) .adm-stat-ico{background:#F5F3FF}
+.adm-stat-ico svg{width:22px;height:22px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.adm-stat:nth-child(1) .adm-stat-ico svg{stroke:var(--blue)}
+.adm-stat:nth-child(2) .adm-stat-ico svg{stroke:#D97706}
+.adm-stat:nth-child(3) .adm-stat-ico svg{stroke:var(--green)}
+.adm-stat:nth-child(4) .adm-stat-ico svg{stroke:#7C3AED}
+
+/* leads table area */
+.adm-panel{background:#fff;border-radius:var(--r-lg);border:1.5px solid var(--g100);overflow:hidden}
+.adm-panel-top{padding:18px 20px;border-bottom:1px solid var(--g100);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.adm-panel-title{font-weight:700;color:var(--navy);font-size:1rem}
+.adm-filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.adm-search{padding:8px 14px;border:1.5px solid var(--g200);border-radius:var(--r-sm);font-size:.82rem;font-family:var(--fb);outline:none;width:220px;transition:border-color var(--dur)}
+.adm-search:focus{border-color:var(--blue)}
+.adm-sel{padding:8px 30px 8px 12px;border:1.5px solid var(--g200);border-radius:var(--r-sm);font-size:.82rem;font-family:var(--fb);outline:none;cursor:pointer;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236B7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center;-webkit-appearance:none;transition:border-color var(--dur)}
+.adm-sel:focus{border-color:var(--blue)}
+
+/* table */
+.adm-tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+thead th{padding:11px 14px;text-align:left;font-size:.72rem;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.07em;background:var(--g100);border-bottom:1px solid var(--g200);white-space:nowrap}
+tbody tr{border-bottom:1px solid var(--g100);transition:background var(--dur)}
+tbody tr:hover{background:#F8FAFF}
+tbody tr:last-child{border-bottom:none}
+td{padding:13px 14px;font-size:.84rem;color:var(--g800);vertical-align:middle}
+.td-name{font-weight:600;color:var(--navy)}
+.td-phone{font-family:monospace;font-size:.82rem;color:var(--g600)}
+.td-date{font-size:.78rem;color:var(--g400);white-space:nowrap}
+
+/* status badge */
+.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:50px;font-size:.72rem;font-weight:700;white-space:nowrap}
+.badge-novo{background:#EFF6FF;color:#1D4ED8}
+.badge-contactado{background:#FFFBEB;color:#92400E}
+.badge-agendado{background:#ECFDF5;color:#065F46}
+
+/* row actions */
+.row-acts{display:flex;gap:6px;align-items:center}
+.act-btn{padding:5px 10px;border-radius:6px;font-size:.72rem;font-weight:600;font-family:var(--fb);cursor:pointer;border:none;transition:background var(--dur),transform var(--dur);white-space:nowrap}
+.act-btn:hover{transform:translateY(-1px)}
+.ab-blue{background:#EEF2FF;color:#1A56DB}.ab-blue:hover{background:#DBEAFE}
+.ab-amber{background:#FFFBEB;color:#92400E}.ab-amber:hover{background:#FEF3C7}
+.ab-green{background:#ECFDF5;color:#065F46}.ab-green:hover{background:#D1FAE5}
+.ab-del{background:#FEF2F2;color:#DC2626;border:1px solid #FECACA}.ab-del:hover{background:#FEE2E2}
+
+/* empty state */
+.adm-empty{text-align:center;padding:60px 24px;color:var(--g400)}
+.adm-empty svg{width:56px;height:56px;margin:0 auto 14px;stroke:var(--g300);fill:none;stroke-width:1.5;stroke-linecap:round}
+.adm-empty p{font-size:.9rem}
+
+/* lead detail modal */
+.adm-modal-bg{display:none;position:fixed;inset:0;background:rgba(11,29,55,.5);z-index:10000;align-items:center;justify-content:center;padding:24px}
+.adm-modal-bg.open{display:flex}
+.adm-modal{background:#fff;border-radius:var(--r-xl);padding:36px;max-width:520px;width:100%;box-shadow:var(--sh-lg);position:relative;max-height:90vh;overflow-y:auto}
+.adm-modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:8px;background:var(--g100);display:grid;place-items:center;cursor:pointer;border:none;transition:background var(--dur)}
+.adm-modal-close:hover{background:var(--g200)}
+.adm-modal-close svg{width:16px;height:16px;stroke:var(--g600);fill:none;stroke-width:2;stroke-linecap:round}
+.adm-modal h3{font-family:var(--fd);font-size:1.5rem;color:var(--navy);margin-bottom:20px;padding-right:36px}
+.adm-field{margin-bottom:14px}
+.adm-field label{display:block;font-size:.72rem;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px}
+.adm-field p{font-size:.9rem;color:var(--g800)}
+.adm-modal-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;padding-top:18px;border-top:1px solid var(--g100)}
+
+/* pagination */
+.adm-pager{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-top:1px solid var(--g100)}
+.adm-pager-info{font-size:.78rem;color:var(--g500)}
+.adm-pager-btns{display:flex;gap:6px}
+.pg-btn{width:32px;height:32px;border-radius:6px;display:grid;place-items:center;border:1.5px solid var(--g200);background:#fff;cursor:pointer;font-size:.8rem;font-weight:600;color:var(--g600);transition:background var(--dur),border-color var(--dur)}
+.pg-btn:hover:not(:disabled){background:var(--g100)}
+.pg-btn:disabled{opacity:.4;cursor:not-allowed}
+.pg-btn.active{background:var(--navy);border-color:var(--navy);color:#fff}
+
+/* toast notification */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--navy);color:#fff;padding:12px 22px;border-radius:50px;font-size:.84rem;font-weight:600;z-index:99999;transition:transform .3s var(--ease),opacity .3s;opacity:0;pointer-events:none;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+</style>
+</head>
+<body>
+
+<!-- ================================================================
+     ADMIN PANEL OVERLAY
+================================================================ -->
+<div id="admin-overlay">
+
+  <!-- Login screen -->
+  <div class="adm-login" id="adm-login">
+    <div class="adm-login-box">
+      <div class="adm-login-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      </div>
+      <h2>Painel Admin</h2>
+      <p>Vita Saúde · Área restrita à equipe interna</p>
+      <div class="adm-pw-wrap">
+        <input type="password" id="adm-pw" placeholder="Senha de acesso" onkeydown="if(event.key==='Enter')doLogin()"/>
+        <button class="adm-pw-toggle" onclick="togglePw()" aria-label="Mostrar/ocultar senha">
+          <svg id="eye-icon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+      <button class="adm-btn-login" onclick="doLogin()">Entrar no painel</button>
+      <p class="adm-login-err" id="adm-err">Senha incorreta. Tente novamente.</p>
+      <p style="margin-top:20px;font-size:.74rem;color:var(--g400)">Esqueceu a senha? Contacte o suporte técnico.</p>
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+  <div class="adm-dash" id="adm-dash">
+
+    <!-- Top bar -->
+    <div class="adm-top">
+      <div class="adm-top-brand">
+        <div class="brand-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="20" rx="2" fill="white" opacity=".9"/><rect x="2" y="9" width="20" height="6" rx="2" fill="white" opacity=".9"/></svg>
+        </div>
+        <div>
+          <div class="adm-top-title">Vita Saúde · Admin</div>
+          <div class="adm-top-sub">Gestão de agendamentos e leads</div>
+        </div>
+      </div>
+      <div class="adm-top-actions">
+        <button class="adm-btn-xs abx-green" onclick="exportCSV()">⬇ Exportar CSV</button>
+        <button class="adm-btn-xs abx-red" onclick="confirmClear()">🗑 Limpar dados</button>
+        <button class="adm-btn-xs abx-gray" onclick="goToSite()">← Voltar ao site</button>
+        <button class="adm-logout" onclick="doLogout()">Sair</button>
+      </div>
+    </div>
+
+    <div class="adm-main">
+
+      <!-- Stat cards -->
+      <div class="adm-stats" id="adm-stats">
+        <div class="adm-stat">
+          <div class="adm-stat-n" id="s-total">0</div>
+          <div class="adm-stat-l">Total de solicitações</div>
+          <div class="adm-stat-ico"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+        </div>
+        <div class="adm-stat">
+          <div class="adm-stat-n" id="s-novo">0</div>
+          <div class="adm-stat-l">Aguardando contato</div>
+          <div class="adm-stat-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        </div>
+        <div class="adm-stat">
+          <div class="adm-stat-n" id="s-contactado">0</div>
+          <div class="adm-stat-l">Contactados</div>
+          <div class="adm-stat-ico"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.5a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .82h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.91a16 16 0 006.06 6.06l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+        </div>
+        <div class="adm-stat">
+          <div class="adm-stat-n" id="s-agendado">0</div>
+          <div class="adm-stat-l">Agendamentos confirmados</div>
+          <div class="adm-stat-ico"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        </div>
+      </div>
+
+      <!-- Leads panel -->
+      <div class="adm-panel">
+        <div class="adm-panel-top">
+          <div class="adm-panel-title">Solicitações de agendamento</div>
+          <div class="adm-filters">
+            <input class="adm-search" id="adm-q" type="text" placeholder="Buscar por nome, telefone…" oninput="renderTable()"/>
+            <select class="adm-sel" id="adm-status-f" onchange="renderTable()">
+              <option value="">Todos os status</option>
+              <option value="novo">Novo</option>
+              <option value="contactado">Contactado</option>
+              <option value="agendado">Agendado</option>
+            </select>
+            <select class="adm-sel" id="adm-spec-f" onchange="renderTable()">
+              <option value="">Todas as especialidades</option>
+              <option>Clínica Geral</option>
+              <option>Check-up Executivo</option>
+              <option>Odontologia</option>
+              <option>Medicina Estética</option>
+              <option>Dermatologia</option>
+              <option>Exames & Laboratório</option>
+              <option>Outra especialidade</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="adm-tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>Especialidade</th>
+                <th>Convênio</th>
+                <th>Status</th>
+                <th>Recebido em</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="leads-tbody"></tbody>
+          </table>
+          <div class="adm-empty" id="adm-empty" style="display:none">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            <p>Nenhuma solicitação encontrada com esses filtros.</p>
+          </div>
+        </div>
+
+        <div class="adm-pager" id="adm-pager">
+          <div class="adm-pager-info" id="pager-info"></div>
+          <div class="adm-pager-btns" id="pager-btns"></div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /adm-dash -->
+</div><!-- /admin-overlay -->
+
+<!-- Lead detail modal -->
+<div class="adm-modal-bg" id="adm-modal">
+  <div class="adm-modal" id="adm-modal-inner"></div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- ================================================================
+     LANDING PAGE
+================================================================ -->
+<nav id="nav" aria-label="Navegação principal">
+  <div class="container">
+    <div class="nav-in">
+      <a href="#home" class="brand">
+        <div class="brand-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="2" width="6" height="20" rx="2" fill="white" opacity=".9"/><rect x="2" y="9" width="20" height="6" rx="2" fill="white" opacity=".9"/></svg>
+        </div>
+        <div>
+          <div class="brand-name">Vita Saúde</div>
+          <div class="brand-sub">Clínica Integrada</div>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="#sobre">Sobre</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#equipe">Equipe</a>
+        <a href="#depoimentos">Depoimentos</a>
+        <a href="#localizacao">Localização</a>
+      </nav>
+      <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20consulta." target="_blank" rel="noopener noreferrer" class="nav-cta">Agendar consulta</a>
+      <button class="ham" id="ham" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<div class="drawer" id="drawer" aria-hidden="true">
+  <a href="#sobre">Sobre</a>
+  <a href="#servicos">Serviços</a>
+  <a href="#equipe">Equipe</a>
+  <a href="#depoimentos">Depoimentos</a>
+  <a href="#localizacao">Localização</a>
+  <a href="https://wa.me/5511999999999" target="_blank" rel="noopener noreferrer" class="drawer-wa">WhatsApp →</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-glow glow1" aria-hidden="true"></div>
+  <div class="hero-glow glow2" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-grid">
+      <div class="rv">
+        <div class="hero-badge"><span class="pdot"></span>Referência em saúde em SP desde 2008</div>
+        <h1 class="hero-title">Cuidamos de você com <em>carinho</em> e tecnologia</h1>
+        <p class="hero-sub">Na Vita Saúde cada consulta começa com escuta. Nossa equipe combina experiência, empatia e equipamentos modernos para cuidar da sua saúde de verdade.</p>
+        <div class="hero-btns">
+          <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20consulta." target="_blank" rel="noopener noreferrer" class="btn btn-green">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Agendar pelo WhatsApp
+          </a>
+          <a href="#servicos" class="btn btn-ghost">Nossos serviços</a>
+        </div>
+        <div class="hero-stats">
+          <div><div class="stat-n">15+</div><div class="stat-l">Anos de experiência</div></div>
+          <div><div class="stat-n">12 mil+</div><div class="stat-l">Pacientes atendidos</div></div>
+          <div><div class="stat-n">98%</div><div class="stat-l">Satisfação</div></div>
+        </div>
+      </div>
+      <div class="hero-vis rv d2" aria-hidden="true">
+        <div class="card-wrap">
+          <div class="hero-illo">
+            <svg class="doc-svg" viewBox="0 0 300 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="150" cy="360" rx="90" ry="50" fill="#0B2040"/>
+              <rect x="88" y="220" width="124" height="160" rx="22" fill="#E8F1FC"/>
+              <rect x="88" y="220" width="56" height="160" rx="22" fill="#D4E5F8"/>
+              <path d="M118 248 Q138 298 155 272 Q172 248 185 264" stroke="#1A56DB" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+              <circle cx="186" cy="265" r="7" fill="#1A56DB"/>
+              <circle cx="118" cy="249" r="5" fill="#0B1D37"/>
+              <rect x="144" y="240" width="8" height="22" rx="2.5" fill="#3B82F6"/>
+              <rect x="137" y="247" width="22" height="8" rx="2.5" fill="#3B82F6"/>
+              <rect x="186" y="272" width="46" height="58" rx="7" fill="white"/>
+              <rect x="198" y="266" width="22" height="9" rx="3" fill="#9CA3AF"/>
+              <line x1="193" y1="292" x2="225" y2="292" stroke="#E5E7EB" stroke-width="1.5"/>
+              <line x1="193" y1="304" x2="220" y2="304" stroke="#E5E7EB" stroke-width="1.5"/>
+              <line x1="193" y1="316" x2="216" y2="316" stroke="#059669" stroke-width="2"/>
+              <rect x="136" y="188" width="28" height="38" rx="6" fill="#F5CBA7"/>
+              <ellipse cx="150" cy="156" rx="50" ry="54" fill="#F5CBA7"/>
+              <path d="M100 148 Q100 102 150 102 Q200 102 200 148" fill="#2C1A12"/>
+              <path d="M100 148 Q96 165 100 175" fill="#2C1A12"/>
+              <path d="M200 148 Q204 165 200 175" fill="#2C1A12"/>
+              <ellipse cx="135" cy="158" rx="7" ry="8" fill="#1a1a2e"/>
+              <ellipse cx="165" cy="158" rx="7" ry="8" fill="#1a1a2e"/>
+              <circle cx="137" cy="155" r="2.2" fill="white"/>
+              <circle cx="167" cy="155" r="2.2" fill="white"/>
+              <path d="M137 177 Q150 189 163 177" stroke="#C08060" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+              <rect x="126" y="150" width="20" height="14" rx="4" fill="none" stroke="#B48C6E" stroke-width="1.8"/>
+              <rect x="154" y="150" width="20" height="14" rx="4" fill="none" stroke="#B48C6E" stroke-width="1.8"/>
+              <line x1="146" y1="157" x2="154" y2="157" stroke="#B48C6E" stroke-width="1.8"/>
+            </svg>
+          </div>
+        </div>
+        <div class="fcard fcard-a">
+          <div class="fc-ico">🗓️</div>
+          <div class="fc-lbl">Disponibilidade</div>
+          <div class="fc-val">Hoje</div>
+          <div class="fc-sub">✓ Vagas abertas</div>
+        </div>
+        <div class="fcard fcard-b">
+          <div class="fc-ico">⭐</div>
+          <div class="fc-lbl">Avaliação Google</div>
+          <div class="fc-val">4,9 / 5</div>
+          <div class="fc-sub">+2.400 avaliações</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="container">
+    <div class="trust-in">
+      <div class="ti"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Acreditada CFM</div>
+      <div class="ti"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>ISO 9001:2015</div>
+      <div class="ti"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>+30 Especialistas</div>
+      <div class="ti"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>LGPD Compliance</div>
+      <div class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Atendimento ágil</div>
+      <div class="ti"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/></svg>+20 Convênios</div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="container">
+    <div class="how-hdr rv">
+      <div class="chip chip-c">Como funciona</div>
+      <h2 class="h2">Agendar é simples e rápido</h2>
+      <p class="lead lead-c">Três passos e você já está cuidando da sua saúde.</p>
+    </div>
+    <div class="steps">
+      <div class="step rv d1">
+        <div class="step-num">1</div>
+        <h3 class="step-t">Escolha a especialidade</h3>
+        <p class="step-d">Pelo WhatsApp, formulário ou telefone, nos diga o que você precisa. Nossa equipe orienta se tiver dúvida.</p>
+      </div>
+      <div class="step rv d2">
+        <div class="step-num">2</div>
+        <h3 class="step-t">Confirme seu horário</h3>
+        <p class="step-d">Horários flexíveis de segunda a sábado. Confirmação na hora e lembrete automático antes do dia.</p>
+      </div>
+      <div class="step rv d3">
+        <div class="step-num">3</div>
+        <h3 class="step-t">Consulte e fique tranquilo</h3>
+        <p class="step-d">Atendimento sem pressa, com explicações claras. Receitas e resultados ficam no seu prontuário digital.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="sobre">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-vis rv" aria-hidden="true">
+        <div class="about-main">
+          <div class="mic"><svg viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2" stroke-linecap="round" width="30" height="30"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><p>Monitoramento contínuo</p></div>
+          <div class="mic"><svg viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" width="30" height="30"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><p>Atendimento humanizado</p></div>
+          <div class="mic"><svg viewBox="0 0 24 24" fill="none" stroke="#C084FC" stroke-width="2" stroke-linecap="round" width="30" height="30"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg><p>Tecnologia avançada</p></div>
+          <div class="mic"><svg viewBox="0 0 24 24" fill="none" stroke="#FCD34D" stroke-width="2" stroke-linecap="round" width="30" height="30"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><p>Respostas rápidas</p></div>
+        </div>
+        <div class="about-badge">
+          <div class="ab-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" width="22" height="22"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+          <div><div class="ab-n">98%</div><div class="ab-t">Taxa de satisfação</div></div>
+        </div>
+      </div>
+      <div class="rv d2">
+        <div class="chip">Nossa história</div>
+        <h2 class="h2">Nascemos do desejo de cuidar de verdade</h2>
+        <p class="lead">A Vita Saúde foi fundada em 2008 pela Dra. Fernanda Alves com uma missão simples: fazer a pessoa se sentir ouvida e cuidada, não apenas tratada. Em 15 anos construímos uma equipe que carrega esse valor no dia a dia.</p>
+        <div class="about-feats">
+          <div class="feat"><div class="feat-ico"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div><div><div class="feat-t">Equipe com titulação de ponta</div><div class="feat-d">Médicos formados em USP, UNIFESP, Einstein e Sírio-Libanês, com CRM ativo e visível no site.</div></div></div>
+          <div class="feat"><div class="feat-ico"><svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div><div><div class="feat-t">Equipamentos de última geração</div><div class="feat-d">Renovamos nosso parque tecnológico a cada dois anos para diagnósticos mais precisos.</div></div></div>
+          <div class="feat"><div class="feat-ico"><svg viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg></div><div><div class="feat-t">Prontuário digital e seguro</div><div class="feat-d">Receitas, resultados e histórico acessíveis pelo app, com criptografia LGPD compliant.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="servicos">
+  <div class="container">
+    <div class="svc-hdr rv"><div class="chip chip-c">O que oferecemos</div><h2 class="h2">Especialidades e serviços</h2><p class="lead lead-c">Da prevenção ao tratamento, tudo em um único lugar — sem filas e com hora marcada.</p></div>
+    <div class="svc-grid">
+      <div class="svc rv d1"><div class="svc-ico"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><h3 class="svc-t">Clínica Geral</h3><p class="svc-d">Consultas com avaliação completa, exames e acompanhamento contínuo. Atendimento ágil com escuta real.</p><a href="#contato" class="svc-lnk">Saiba mais →</a></div>
+      <div class="svc rv d2"><div class="svc-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><h3 class="svc-t">Check-up Executivo</h3><p class="svc-d">Painel completo de exames laboratoriais, ECG, avaliação cardiológica e relatório médico personalizado.</p><a href="#contato" class="svc-lnk">Saiba mais →</a></div>
+      <div class="svc rv d3"><div class="svc-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div><h3 class="svc-t">Odontologia</h3><p class="svc-d">Clareamento, ortodontia, implantes e próteses. Consultórios digitais com equipamentos de ponta.</p><a href="#contato" class="svc-lnk">Saiba mais →</a></div>
+      <div class="svc rv d1"><div class="svc-ico"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div><h3 class="svc-t">Medicina Estética</h3><p class="svc-d">Toxina botulínica, preenchimentos, bioestimuladores — resultados naturais e sem exageros.</p><a href="#contato" class="svc-lnk">Saiba mais →</a></div>
+      <div class="svc rv d2"><div class="svc-ico"><svg viewBox="0 0 24 24"><path d="M4.5 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM14.25 8.625a3.375 3.375 0 116.75 0 3.375 3.375 0 01-6.75 0zM1.5 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122z"/></svg></div><h3 class="svc-t">Dermatologia</h3><p class="svc-d">Acne, manchas, queda capilar e dermatoscopia digital com mapeamento completo de nevos.</p><a href="#contato" class="svc-lnk">Saiba mais →</a></div>
+      <div class="svc rv d3"><div class="svc-ico"><svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg></div><h3 class="svc-t">Exames & Laboratório</h3><p class="svc-d">Laboratório próprio com resultados em 24h, ultrassonografia, ECG, densitometria e raio-X digital.</p><a href="#contato" class="svc-lnk">Saiba mais →</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team" id="equipe">
+  <div class="container">
+    <div class="team-hdr rv"><div class="chip chip-c">Nossa equipe</div><h2 class="h2">Médicos que realmente escutam</h2><p class="lead lead-c">Conheça os especialistas que cuidam dos nossos pacientes todos os dias.</p></div>
+    <div class="team-grid">
+      <div class="doc rv d1"><div class="doc-av"><svg viewBox="0 0 200 230" fill="none" width="100%"><ellipse cx="100" cy="215" rx="70" ry="32" fill="#93C5FD" opacity=".35"/><rect x="58" y="145" width="84" height="85" rx="18" fill="#DBEAFE"/><rect x="58" y="145" width="38" height="85" rx="18" fill="#BFDBFE"/><path d="M78 165 Q95 195 108 178 Q121 161 130 173" stroke="#1A56DB" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="131" cy="174" r="5" fill="#1A56DB"/><rect x="93" y="158" width="6" height="15" rx="2" fill="#3B82F6"/><rect x="87" y="163" width="18" height="6" rx="2" fill="#3B82F6"/><ellipse cx="100" cy="102" rx="36" ry="40" fill="#FDDCB5"/><path d="M64 96 Q64 62 100 62 Q136 62 136 96" fill="#5C3317"/><ellipse cx="88" cy="103" rx="5" ry="6" fill="#1a1a2e"/><ellipse cx="112" cy="103" rx="5" ry="6" fill="#1a1a2e"/><circle cx="89.5" cy="101" r="1.8" fill="white"/><circle cx="113.5" cy="101" r="1.8" fill="white"/><path d="M90 118 Q100 126 110 118" stroke="#C08060" stroke-width="2" stroke-linecap="round" fill="none"/></svg></div><div class="doc-info"><div class="doc-name">Dra. Fernanda Alves</div><div class="doc-spec">Clínica Geral · Fundadora</div><div class="doc-crm">CRM-SP 123.456</div></div></div>
+      <div class="doc rv d2"><div class="doc-av"><svg viewBox="0 0 200 230" fill="none" width="100%"><ellipse cx="100" cy="215" rx="70" ry="32" fill="#6EE7B7" opacity=".35"/><rect x="58" y="145" width="84" height="85" rx="18" fill="#D1FAE5"/><rect x="58" y="145" width="38" height="85" rx="18" fill="#A7F3D0"/><path d="M78 165 Q95 195 108 178 Q121 161 130 173" stroke="#059669" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="131" cy="174" r="5" fill="#059669"/><rect x="93" y="158" width="6" height="15" rx="2" fill="#34D399"/><rect x="87" y="163" width="18" height="6" rx="2" fill="#34D399"/><ellipse cx="100" cy="102" rx="36" ry="40" fill="#F4C89E"/><path d="M64 96 Q64 62 100 62 Q136 62 136 96" fill="#1C0F05"/><path d="M64 96 Q62 107 64 117" fill="#1C0F05"/><path d="M136 96 Q138 107 136 117" fill="#1C0F05"/><ellipse cx="88" cy="103" rx="5" ry="6" fill="#1a1a2e"/><ellipse cx="112" cy="103" rx="5" ry="6" fill="#1a1a2e"/><circle cx="89.5" cy="101" r="1.8" fill="white"/><circle cx="113.5" cy="101" r="1.8" fill="white"/><path d="M90 118 Q100 126 110 118" stroke="#A07040" stroke-width="2" stroke-linecap="round" fill="none"/></svg></div><div class="doc-info"><div class="doc-name">Dr. Marcelo Santana</div><div class="doc-spec">Cardiologia</div><div class="doc-crm">CRM-SP 98.765</div></div></div>
+      <div class="doc rv d3"><div class="doc-av"><svg viewBox="0 0 200 230" fill="none" width="100%"><ellipse cx="100" cy="215" rx="70" ry="32" fill="#C4B5FD" opacity=".35"/><rect x="58" y="145" width="84" height="85" rx="18" fill="#EDE9FE"/><rect x="58" y="145" width="38" height="85" rx="18" fill="#DDD6FE"/><path d="M78 165 Q95 195 108 178 Q121 161 130 173" stroke="#7C3AED" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="131" cy="174" r="5" fill="#7C3AED"/><rect x="93" y="158" width="6" height="15" rx="2" fill="#A78BFA"/><rect x="87" y="163" width="18" height="6" rx="2" fill="#A78BFA"/><ellipse cx="100" cy="102" rx="36" ry="40" fill="#FDDCB5"/><path d="M64 96 Q64 62 100 62 Q136 62 136 96" fill="#2C1810"/><path d="M64 96 Q70 82 80 86 Q90 90 100 84 Q110 78 120 86 Q130 90 136 96" fill="#2C1810"/><ellipse cx="88" cy="103" rx="5" ry="6" fill="#1a1a2e"/><ellipse cx="112" cy="103" rx="5" ry="6" fill="#1a1a2e"/><circle cx="89.5" cy="101" r="1.8" fill="white"/><circle cx="113.5" cy="101" r="1.8" fill="white"/><path d="M90 118 Q100 126 110 118" stroke="#C08060" stroke-width="2" stroke-linecap="round" fill="none"/></svg></div><div class="doc-info"><div class="doc-name">Dra. Juliana Ramos</div><div class="doc-spec">Dermatologia</div><div class="doc-crm">CRM-SP 147.321</div></div></div>
+      <div class="doc rv d4"><div class="doc-av"><svg viewBox="0 0 200 230" fill="none" width="100%"><ellipse cx="100" cy="215" rx="70" ry="32" fill="#FDA4AF" opacity=".35"/><rect x="58" y="145" width="84" height="85" rx="18" fill="#FFE4E6"/><rect x="58" y="145" width="38" height="85" rx="18" fill="#FECDD3"/><path d="M78 165 Q95 195 108 178 Q121 161 130 173" stroke="#E11D48" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="131" cy="174" r="5" fill="#E11D48"/><rect x="93" y="158" width="6" height="15" rx="2" fill="#FB7185"/><rect x="87" y="163" width="18" height="6" rx="2" fill="#FB7185"/><ellipse cx="100" cy="102" rx="36" ry="40" fill="#F4C89E"/><path d="M64 100 Q64 62 100 62 Q136 62 136 100" fill="#3B1A08"/><ellipse cx="88" cy="103" rx="5" ry="6" fill="#1a1a2e"/><ellipse cx="112" cy="103" rx="5" ry="6" fill="#1a1a2e"/><circle cx="89.5" cy="101" r="1.8" fill="white"/><circle cx="113.5" cy="101" r="1.8" fill="white"/><path d="M90 118 Q100 126 110 118" stroke="#A07040" stroke-width="2" stroke-linecap="round" fill="none"/></svg></div><div class="doc-info"><div class="doc-name">Dr. Ricardo Costa</div><div class="doc-spec">Odontologia Estética</div><div class="doc-crm">CRO-SP 55.890</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFFERENTIALS -->
+<section class="diff">
+  <div class="container">
+    <div class="diff-grid">
+      <div class="rv">
+        <div class="chip chip-lt">Por que nos escolher</div>
+        <h2 class="h2 h2-w">O que nos faz diferentes</h2>
+        <p class="lead" style="color:rgba(255,255,255,.52)">Cada detalhe foi pensado para que você se sinta acolhido desde o primeiro contato.</p>
+        <div class="diff-list">
+          <div class="di"><div class="di-chk"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="di-t">Agendamento em menos de 3 minutos</div><div class="di-d">WhatsApp, formulário ou telefone — confirmação imediata e lembrete automático antes da consulta.</div></div></div>
+          <div class="di"><div class="di-chk"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="di-t">Todos os profissionais com CRM ativo</div><div class="di-d">Consulte o perfil completo de cada médico no site — formação, especializações e experiência.</div></div></div>
+          <div class="di"><div class="di-chk"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="di-t">Estrutura acessível e acolhedora</div><div class="di-d">Acessibilidade total, estacionamento conveniado, wi-fi e espaço kids. A 200 m do Metrô Consolação.</div></div></div>
+          <div class="di"><div class="di-chk"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="di-t">Prontuário digital seguro (LGPD)</div><div class="di-d">Resultados e receitas acessíveis pelo app a qualquer hora, com criptografia de ponta.</div></div></div>
+        </div>
+      </div>
+      <div class="rv d2">
+        <div class="diff-nums">
+          <div class="dn acc"><div class="dn-n"><span class="dn-g">12k</span>+</div><div class="dn-l">pacientes atendidos nos últimos 12 meses</div></div>
+          <div class="dn"><div class="dn-n">30+</div><div class="dn-l">especialidades</div></div>
+          <div class="dn"><div class="dn-n">15+</div><div class="dn-l">anos no mercado</div></div>
+          <div class="dn" style="grid-column:span 2"><div class="dn-n"><span class="dn-g">98%</span></div><div class="dn-l">taxa de satisfação</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi" id="depoimentos">
+  <div class="container">
+    <div class="testi-hdr rv"><div class="chip chip-c">Depoimentos</div><h2 class="h2">O que nossos pacientes dizem</h2><p class="lead lead-c">Histórias reais de quem confiou e transformou sua saúde conosco.</p></div>
+    <div class="testi-grid">
+      <div class="tc tc-dark rv d1"><div class="tc-q">"</div><div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><p class="tc-txt">Fui ao check-up com medo do que poderia descobrir. A Dra. Fernanda me deixou tão à vontade que nem percebi a consulta passar. Ela explicou cada resultado com calma, sem termos complicados. Saí com um plano de saúde claro e me sentindo cuidada de verdade.</p><div class="tc-auth"><div class="tc-av" style="background:linear-gradient(135deg,#34D399,#059669);color:white">AM</div><div><div class="tc-name">Ana Maria Oliveira</div><div class="tc-role">Paciente há 5 anos · Check-up Executivo</div></div></div></div>
+      <div class="tc rv d2"><div class="tc-q">"</div><div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><p class="tc-txt">Fiz implante e clareamento dental aqui. O Dr. Ricardo é incrível — paciente, detalhista e muito honesto sobre o que eu precisava. O resultado ficou muito natural. Minha filha de 14 anos agora também é paciente e adora.</p><div class="tc-auth"><div class="tc-av" style="background:linear-gradient(135deg,#60A5FA,#1A56DB);color:white">RS</div><div><div class="tc-name">Rafael Santos</div><div class="tc-role">Paciente há 2 anos · Odontologia</div></div></div></div>
+      <div class="tc rv d1"><div class="tc-q">"</div><div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><p class="tc-txt">Agendei em dois minutos pelo WhatsApp numa tarde de terça. Fui consultada na quinta de manhã. A Dra. Juliana explicou tudo sobre a minha pele de um jeito que eu nunca tinha entendido antes. Pela primeira vez tenho uma médica que realmente me conhece.</p><div class="tc-auth"><div class="tc-av" style="background:linear-gradient(135deg,#F472B6,#DB2777);color:white">LC</div><div><div class="tc-name">Luciana Costa</div><div class="tc-role">Paciente há 3 anos · Dermatologia</div></div></div></div>
+      <div class="tc rv d2"><div class="tc-q">"</div><div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><p class="tc-txt">Levei minha filha de 8 anos com uma mancha que me preocupava muito. A equipe foi incrível com ela — brincaram, explicaram de um jeito que ela entendeu, sem chorar nada. Tratamento funcionou em três semanas. Hoje toda a família é paciente aqui.</p><div class="tc-auth"><div class="tc-av" style="background:linear-gradient(135deg,#FCD34D,#D97706);color:white">PM</div><div><div class="tc-name">Pedro Mendes</div><div class="tc-role">Paciente há 4 anos · Dermatologia Pediátrica</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="container">
+    <div class="cta-in rv">
+      <h2 class="cta-t">Pronto para dar o próximo passo?</h2>
+      <p class="cta-d">A sua saúde não pode esperar. Agende agora e saia da consulta com clareza, tranquilidade e um plano concreto para se sentir melhor.</p>
+      <div class="cta-btns">
+        <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20agendar." target="_blank" rel="noopener noreferrer" class="btn btn-white">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Agendar pelo WhatsApp
+        </a>
+        <a href="#contato" class="btn btn-ghost">Preencher formulário</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT / FORM -->
+<section class="contact" id="contato">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="rv">
+        <div class="chip">Entre em contato</div>
+        <h2 class="h2">Agende sua consulta</h2>
+        <p class="lead">Preencha o formulário e nossa equipe entra em contato em até 1 hora útil para confirmar seu horário.</p>
+        <div class="ct-trust">
+          <div class="ct-row"><div class="ct-ico"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><span class="ct-txt">Resposta em até 1 hora útil</span></div>
+          <div class="ct-row"><div class="ct-ico"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><span class="ct-txt">Dados protegidos pela LGPD</span></div>
+          <div class="ct-row"><div class="ct-ico"><svg viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg></div><span class="ct-txt">(11) 3456-7890 · Seg–Sáb 7h–20h</span></div>
+          <div class="ct-row"><div class="ct-ico"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><span class="ct-txt">Atendemos mais de 20 convênios</span></div>
+        </div>
+      </div>
+      <div class="rv d2">
+        <div class="fbox">
+          <div id="form-fields">
+            <div class="fbox-t">Solicitar agendamento</div>
+            <div class="fbox-s">Campos marcados com * são obrigatórios.</div>
+            <div class="frow">
+              <div class="fg"><label for="f-nome">Nome completo *</label><input type="text" id="f-nome" placeholder="Seu nome" autocomplete="name"/><div class="ferr" id="err-nome">Informe seu nome.</div></div>
+              <div class="fg"><label for="f-tel">Telefone / WhatsApp *</label><input type="tel" id="f-tel" placeholder="(11) 99999-9999" autocomplete="tel"/><div class="ferr" id="err-tel">Informe seu telefone.</div></div>
+            </div>
+            <div class="fg"><label for="f-email">E-mail</label><input type="email" id="f-email" placeholder="seu@email.com" autocomplete="email"/></div>
+            <div class="frow">
+              <div class="fg"><label for="f-esp">Especialidade *</label><select id="f-esp"><option value="" disabled selected>Selecione…</option><option>Clínica Geral</option><option>Check-up Executivo</option><option>Odontologia</option><option>Medicina Estética</option><option>Dermatologia</option><option>Exames & Laboratório</option><option>Outra especialidade</option></select><div class="ferr" id="err-esp">Selecione uma especialidade.</div></div>
+              <div class="fg"><label for="f-conv">Convênio</label><select id="f-conv"><option value="" disabled selected>Selecione…</option><option>Particular</option><option>Unimed</option><option>Amil</option><option>SulAmérica</option><option>Bradesco Saúde</option><option>Porto Seguro</option><option>Outro convênio</option></select></div>
+            </div>
+            <div class="fg"><label for="f-msg">Mensagem (opcional)</label><textarea id="f-msg" placeholder="Preferência de horário, dúvidas ou outros detalhes…"></textarea></div>
+            <button type="button" class="btn-sub" id="btn-sub" onclick="submitForm()">Solicitar agendamento →</button>
+          </div>
+          <div id="form-ok">
+            <div class="ok-ico">✅</div>
+            <h3>Solicitação enviada!</h3>
+            <p>Nossa equipe entrará em contato em até 1 hora útil para confirmar seu horário.<br>Obrigado por confiar na Vita Saúde!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section class="loc" id="localizacao">
+  <div class="container">
+    <div class="rv" style="margin-bottom:46px"><div class="chip">Onde estamos</div><h2 class="h2">Localização e horários</h2></div>
+    <div class="loc-grid">
+      <div class="map-wrap rv"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.197531538407!2d-46.65728392376!3d-23.56107086153388!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce5830da6ebf3d%3A0xa0fa1a39b57f3b9b!2sAv.%20Paulista%2C%20S%C3%A3o%20Paulo%20-%20SP!5e0!3m2!1spt!2sbr!4v1703025600000!5m2!1spt!2sbr" title="Localização Vita Saúde" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+      <div class="loc-cards rv d2">
+        <div class="lc"><div class="lc-ico"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="lc-t">Endereço</div><div class="lc-d">Av. Paulista, 1.234 — Conjunto 101<br>Bela Vista · São Paulo – SP · CEP 01310-100</div></div></div>
+        <div class="lc"><div class="lc-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="lc-t">Horários</div><div class="hrs"><div class="hr"><span class="hr-day">Segunda a Sexta</span><span class="hr-t">07h–20h</span></div><div class="hr"><span class="hr-day">Sábado</span><span class="hr-t">08h–14h</span></div><div class="hr"><span class="hr-day">Domingo</span><span class="hr-off">Fechado</span></div><div class="hr"><span class="hr-day">Feriados</span><span class="hr-t">08h–12h</span></div></div></div></div>
+        <div class="lc"><div class="lc-ico"><svg viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg></div><div><div class="lc-t">Contato direto</div><div class="lc-d">📞 (11) 3456-7890 — Central<br>📱 (11) 99999-9999 — WhatsApp<br>✉️ contato@vitasaude.com.br</div></div></div>
+        <div class="lc"><div class="lc-ico"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="1"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div><div><div class="lc-t">Como chegar</div><div class="lc-d">🚇 200 m do Metrô Consolação (Linha 2 – Verde)<br>🚌 Linhas 8022/10 com parada na porta<br>🚗 Estacionamento conveniado no edifício</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="ft-grid">
+      <div>
+        <div class="ft-brand">
+          <div class="brand-ico" style="width:36px;height:36px;border-radius:8px"><svg viewBox="0 0 24 24" fill="none" width="16" height="16"><rect x="9" y="2" width="6" height="20" rx="2" fill="white" opacity=".9"/><rect x="2" y="9" width="20" height="6" rx="2" fill="white" opacity=".9"/></svg></div>
+          <div><div class="ft-brand-name">Vita Saúde</div><div class="ft-brand-sub">Clínica Integrada</div></div>
+        </div>
+        <p class="ft-txt">Cuidando da saúde de famílias paulistanas desde 2008. Nossa missão é oferecer atendimento de excelência com empatia, tecnologia e respeito.</p>
+        <div class="ft-cfm"><svg viewBox="0 0 24 24" fill="#34D399"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>CFM · Nº 123.456-SP</span></div>
+        <div class="ft-social">
+          <a href="#" class="soc" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+          <a href="#" class="soc" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+          <a href="https://wa.me/5511999999999" target="_blank" rel="noopener noreferrer" class="soc" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+        </div>
+      </div>
+      <div class="ft-col"><h4>Serviços</h4><nav class="ft-links"><a href="#servicos">Clínica Geral</a><a href="#servicos">Check-up Executivo</a><a href="#servicos">Odontologia</a><a href="#servicos">Medicina Estética</a><a href="#servicos">Dermatologia</a><a href="#servicos">Exames & Lab</a></nav></div>
+      <div class="ft-col"><h4>Institucional</h4><nav class="ft-links"><a href="#sobre">Sobre nós</a><a href="#equipe">Nossa equipe</a><a href="#diferenciais">Diferenciais</a><a href="#depoimentos">Depoimentos</a><a href="#">Convênios</a><a href="#">Trabalhe conosco</a></nav></div>
+      <div class="ft-col"><h4>Contato</h4><div class="ft-contact"><div class="fci"><svg viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>(11) 3456-7890</div><div class="fci"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>(11) 99999-9999</div><div class="fci"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>contato@vitasaude.com.br</div><div class="fci"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Av. Paulista, 1234 – SP</div></div></div>
+    </div>
+    <div class="ft-bot">
+      <!-- BUG FIX: copyright triple-click opens admin -->
+      <p><span id="copy-trigger" title="Acesso restrito">© 2025 Vita Saúde Clínica Integrada. Todos os direitos reservados.</span></p>
+      <div class="ft-bot-links"><a href="#">Privacidade</a><a href="#">Termos de Uso</a><a href="#">LGPD</a><a href="#" onclick="openAdmin();return false" style="color:rgba(255,255,255,.1)">⚙</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar." target="_blank" rel="noopener noreferrer" class="wa" aria-label="WhatsApp">
+  <span class="wa-tip">Fale conosco agora!</span>
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- ================================================================
+     JAVASCRIPT
+================================================================ -->
+<script>
+'use strict';
+
+/* ----------------------------------------------------------------
+   STORAGE KEY & PASSWORD
+---------------------------------------------------------------- */
+const LEADS_KEY = 'vita_leads';
+const ADMIN_PASS = 'vita2025';
+const PER_PAGE = 10;
+
+/* ----------------------------------------------------------------
+   SEED DEMO LEADS (only if localStorage is empty)
+---------------------------------------------------------------- */
+function seedDemoLeads(){
+  if(localStorage.getItem(LEADS_KEY)) return;
+  const demos = [
+    {id:uid(),nome:'Ana Maria Oliveira',tel:'(11) 98765-4321',email:'ana@email.com',especialidade:'Check-up Executivo',convenio:'Unimed',msg:'Prefiro horários matinais.',status:'agendado',createdAt:ago(2)},
+    {id:uid(),nome:'Rafael Santos',tel:'(11) 91234-5678',email:'rafael@email.com',especialidade:'Odontologia',convenio:'Particular',msg:'',status:'contactado',createdAt:ago(5)},
+    {id:uid(),nome:'Luciana Costa',tel:'(11) 99876-5432',email:'lu@email.com',especialidade:'Dermatologia',convenio:'Amil',msg:'Tenho urgência, possível?',status:'novo',createdAt:ago(0)},
+    {id:uid(),nome:'Pedro Mendes',tel:'(11) 97654-3210',email:'pedro@email.com',especialidade:'Clínica Geral',convenio:'Bradesco Saúde',msg:'',status:'novo',createdAt:ago(1)},
+    {id:uid(),nome:'Carla Ferreira',tel:'(11) 93456-7890',email:'carla@email.com',especialidade:'Medicina Estética',convenio:'Particular',msg:'Tenho dúvidas sobre botox.',status:'contactado',createdAt:ago(3)},
+    {id:uid(),nome:'João Paulo Lima',tel:'(11) 95678-1234',email:'',especialidade:'Exames & Laboratório',convenio:'SulAmérica',msg:'',status:'agendado',createdAt:ago(7)},
+  ];
+  localStorage.setItem(LEADS_KEY, JSON.stringify(demos));
+}
+function uid(){ return Math.random().toString(36).slice(2)+Date.now().toString(36) }
+function ago(days){ const d=new Date(); d.setDate(d.getDate()-days); return d.toISOString() }
+
+/* ----------------------------------------------------------------
+   LEADS CRUD
+---------------------------------------------------------------- */
+function getLeads(){ try{ return JSON.parse(localStorage.getItem(LEADS_KEY)||'[]') }catch(e){ return [] } }
+function saveLeads(arr){ localStorage.setItem(LEADS_KEY, JSON.stringify(arr)) }
+function addLead(data){
+  const leads = getLeads();
+  leads.unshift({...data, id:uid(), status:'novo', createdAt:new Date().toISOString()});
+  saveLeads(leads);
+}
+function updateStatus(id, status){
+  const leads = getLeads().map(l => l.id===id ? {...l, status} : l);
+  saveLeads(leads);
+}
+function deleteLead(id){
+  saveLeads(getLeads().filter(l => l.id!==id));
+}
+
+/* ----------------------------------------------------------------
+   NAVBAR — scroll effect
+---------------------------------------------------------------- */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', ()=> nav.classList.toggle('solid', scrollY>50), {passive:true});
+
+/* ----------------------------------------------------------------
+   HAMBURGER / DRAWER
+---------------------------------------------------------------- */
+const ham = document.getElementById('ham');
+const drawer = document.getElementById('drawer');
+let drawerOpen = false;
+
+function openDrawer(){
+  drawerOpen=true;
+  ham.classList.add('open');
+  drawer.classList.add('open');
+  ham.setAttribute('aria-expanded','true');
+  drawer.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+}
+function closeDrawer(){
+  drawerOpen=false;
+  ham.classList.remove('open');
+  drawer.classList.remove('open');
+  ham.setAttribute('aria-expanded','false');
+  drawer.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+}
+ham.addEventListener('click', ()=> drawerOpen ? closeDrawer() : openDrawer());
+drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', closeDrawer));
+document.addEventListener('click', e=>{
+  if(drawerOpen && !drawer.contains(e.target) && !ham.contains(e.target)) closeDrawer();
+});
+document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ closeDrawer(); closeModal(); } });
+
+/* ----------------------------------------------------------------
+   SCROLL REVEAL
+---------------------------------------------------------------- */
+const ro = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); ro.unobserve(e.target); } });
+},{threshold:.10, rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.rv').forEach(el=>ro.observe(el));
+
+/* ----------------------------------------------------------------
+   SMOOTH SCROLL
+---------------------------------------------------------------- */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click', function(e){
+    const href = this.getAttribute('href');
+    if(!href||href==='#') return;
+    const t = document.querySelector(href);
+    if(!t) return;
+    e.preventDefault();
+    window.scrollTo({top: t.getBoundingClientRect().top+scrollY-78, behavior:'smooth'});
+  });
+});
+
+/* ----------------------------------------------------------------
+   PHONE MASK — BUG FIX: clean implementation
+---------------------------------------------------------------- */
+document.getElementById('f-tel').addEventListener('input', function(){
+  const d = this.value.replace(/\D/g,'').slice(0,11);
+  const n = d.length;
+  let v = d;
+  if(n > 6){
+    // mobile: (XX) XXXXX-XXXX | landline: (XX) XXXX-XXXX
+    const split = n===11 ? 7 : 6;
+    v = `(${d.slice(0,2)}) ${d.slice(2,split)}-${d.slice(split)}`;
+  } else if(n > 2){
+    v = `(${d.slice(0,2)}) ${d.slice(2)}`;
+  } else if(n > 0){
+    v = `(${d}`;
+  }
+  this.value = v;
+});
+
+/* ----------------------------------------------------------------
+   FORM VALIDATION & SUBMIT
+---------------------------------------------------------------- */
+function showErr(id, show){ document.getElementById(id).classList.toggle('show', show); }
+
+function submitForm(){
+  const nome = document.getElementById('f-nome').value.trim();
+  const tel  = document.getElementById('f-tel').value.trim();
+  const esp  = document.getElementById('f-esp').value;
+
+  let valid = true;
+  if(!nome){ showErr('err-nome',true); valid=false; } else showErr('err-nome',false);
+  if(!tel || tel.replace(/\D/g,'').length < 10){ showErr('err-tel',true); valid=false; } else showErr('err-tel',false);
+  if(!esp){ showErr('err-esp',true); valid=false; } else showErr('err-esp',false);
+  if(!valid) return;
+
+  const btn = document.getElementById('btn-sub');
+  btn.disabled = true;
+  btn.textContent = 'Enviando…';
+
+  // Save to localStorage
+  addLead({
+    nome,
+    tel,
+    email: document.getElementById('f-email').value.trim(),
+    especialidade: esp,
+    convenio: document.getElementById('f-conv').value || '—',
+    msg: document.getElementById('f-msg').value.trim(),
+  });
+
+  setTimeout(()=>{
+    document.getElementById('form-fields').style.display='none';
+    document.getElementById('form-ok').style.display='block';
+  }, 900);
+}
+
+// live clear errors on input
+['f-nome','f-tel','f-esp'].forEach(id=>{
+  const el = document.getElementById(id);
+  el.addEventListener('input', ()=>{
+    const errMap = {'f-nome':'err-nome','f-tel':'err-tel','f-esp':'err-esp'};
+    showErr(errMap[id], false);
+  });
+});
+
+/* ================================================================
+   ADMIN PANEL
+================================================================ */
+let admLoggedIn = false;
+let currentPage = 1;
+let filteredLeads = [];
+
+/* Open admin overlay */
+function openAdmin(){ document.getElementById('admin-overlay').classList.add('show'); document.body.style.overflow='hidden'; }
+function closeAdmin(){ document.getElementById('admin-overlay').classList.remove('show'); document.body.style.overflow=''; }
+function goToSite(){ closeAdmin(); }
+
+/* Triple-click copyright easter egg */
+let copyClicks=0, copyTimer;
+document.getElementById('copy-trigger').addEventListener('click', ()=>{
+  copyClicks++;
+  clearTimeout(copyTimer);
+  copyTimer = setTimeout(()=>{ copyClicks=0; },600);
+  if(copyClicks>=3){ copyClicks=0; openAdmin(); }
+});
+
+/* Also open via URL hash */
+if(location.hash==='#admin') openAdmin();
+
+/* ---- Login ---- */
+function doLogin(){
+  const pw = document.getElementById('adm-pw').value;
+  if(pw === ADMIN_PASS){
+    admLoggedIn = true;
+    document.getElementById('adm-login').style.display='none';
+    document.getElementById('adm-dash').classList.add('show');
+    renderDash();
+  } else {
+    const err = document.getElementById('adm-err');
+    err.style.display='block';
+    document.getElementById('adm-pw').value='';
+    document.getElementById('adm-pw').focus();
+    setTimeout(()=>{ err.style.display='none'; },3500);
+  }
+}
+document.getElementById('adm-pw').addEventListener('keydown', e=>{ if(e.key==='Enter') doLogin(); });
+
+function doLogout(){
+  admLoggedIn=false;
+  document.getElementById('adm-dash').classList.remove('show');
+  document.getElementById('adm-login').style.display='flex';
+  document.getElementById('adm-pw').value='';
+  closeAdmin();
+}
+
+/* toggle password visibility */
+function togglePw(){
+  const inp = document.getElementById('adm-pw');
+  inp.type = inp.type==='password' ? 'text' : 'password';
+  const icon = document.getElementById('eye-icon');
+  icon.innerHTML = inp.type==='password'
+    ? '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>'
+    : '<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>';
+}
+
+/* ---- Dashboard render ---- */
+function renderDash(){
+  updateStats();
+  currentPage=1;
+  renderTable();
+}
+
+function updateStats(){
+  const leads = getLeads();
+  document.getElementById('s-total').textContent = leads.length;
+  document.getElementById('s-novo').textContent = leads.filter(l=>l.status==='novo').length;
+  document.getElementById('s-contactado').textContent = leads.filter(l=>l.status==='contactado').length;
+  document.getElementById('s-agendado').textContent = leads.filter(l=>l.status==='agendado').length;
+}
+
+function renderTable(){
+  const q    = document.getElementById('adm-q').value.toLowerCase();
+  const sf   = document.getElementById('adm-status-f').value;
+  const spf  = document.getElementById('adm-spec-f').value;
+
+  const leads = getLeads();
+  filteredLeads = leads.filter(l=>{
+    const matchQ  = !q || l.nome.toLowerCase().includes(q) || l.tel.includes(q) || (l.email||'').toLowerCase().includes(q);
+    const matchSt = !sf || l.status===sf;
+    const matchSp = !spf || l.especialidade===spf;
+    return matchQ && matchSt && matchSp;
+  });
+
+  const total = filteredLeads.length;
+  const pages = Math.max(1, Math.ceil(total/PER_PAGE));
+  currentPage = Math.min(currentPage, pages);
+  const start = (currentPage-1)*PER_PAGE;
+  const slice = filteredLeads.slice(start, start+PER_PAGE);
+
+  const tbody = document.getElementById('leads-tbody');
+  const empty = document.getElementById('adm-empty');
+
+  if(slice.length===0){
+    tbody.innerHTML='';
+    empty.style.display='block';
+  } else {
+    empty.style.display='none';
+    tbody.innerHTML = slice.map(l=>`
+      <tr>
+        <td><div class="td-name">${esc(l.nome)}</div><div style="font-size:.72rem;color:var(--g400)">${esc(l.email||'—')}</div></td>
+        <td><span class="td-phone">${esc(l.tel)}</span></td>
+        <td>${esc(l.especialidade)}</td>
+        <td>${esc(l.convenio||'—')}</td>
+        <td><span class="badge badge-${l.status}">${statusLabel(l.status)}</span></td>
+        <td class="td-date">${fmtDate(l.createdAt)}</td>
+        <td>
+          <div class="row-acts">
+            <button class="act-btn ab-blue" onclick="openDetail('${l.id}')">Ver</button>
+            ${l.status!=='contactado'&&l.status!=='agendado' ? `<button class="act-btn ab-amber" onclick="setStatus('${l.id}','contactado')">Contactado</button>` : ''}
+            ${l.status!=='agendado' ? `<button class="act-btn ab-green" onclick="setStatus('${l.id}','agendado')">Agendado</button>` : ''}
+            <button class="act-btn ab-del" onclick="confirmDelete('${l.id}')">✕</button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  // pager info
+  document.getElementById('pager-info').textContent =
+    total===0 ? '0 resultados' : `Exibindo ${start+1}–${Math.min(start+PER_PAGE,total)} de ${total}`;
+
+  // pager buttons
+  const pb = document.getElementById('pager-btns');
+  pb.innerHTML = '';
+  if(pages<=1) return;
+  const prev = document.createElement('button');
+  prev.className='pg-btn'; prev.textContent='←'; prev.disabled=currentPage===1;
+  prev.onclick=()=>{ currentPage--; renderTable(); };
+  pb.appendChild(prev);
+  for(let i=1;i<=pages;i++){
+    const b=document.createElement('button');
+    b.className='pg-btn'+(i===currentPage?' active':'');
+    b.textContent=i;
+    b.onclick=(()=>{ const pg=i; return ()=>{ currentPage=pg; renderTable(); }; })();
+    pb.appendChild(b);
+  }
+  const next = document.createElement('button');
+  next.className='pg-btn'; next.textContent='→'; next.disabled=currentPage===pages;
+  next.onclick=()=>{ currentPage++; renderTable(); };
+  pb.appendChild(next);
+}
+
+function setStatus(id, status){
+  updateStatus(id, status);
+  updateStats();
+  renderTable();
+  toast(`Status atualizado para "${statusLabel(status)}" ✓`);
+}
+
+function confirmDelete(id){
+  const lead = getLeads().find(l=>l.id===id);
+  if(!lead) return;
+  if(confirm(`Excluir a solicitação de "${lead.nome}"?`)){
+    deleteLead(id);
+    updateStats();
+    renderTable();
+    toast('Solicitação excluída.');
+  }
+}
+
+function confirmClear(){
+  if(confirm('Tem certeza que quer apagar TODOS os dados? Essa ação não pode ser desfeita.')){
+    localStorage.removeItem(LEADS_KEY);
+    updateStats();
+    renderTable();
+    toast('Todos os dados foram apagados.');
+  }
+}
+
+/* ---- Detail modal ---- */
+function openDetail(id){
+  const lead = getLeads().find(l=>l.id===id);
+  if(!lead) return;
+  document.getElementById('adm-modal-inner').innerHTML = `
+    <button class="adm-modal-close" onclick="closeModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <h3>${esc(lead.nome)}</h3>
+    <div class="adm-field"><label>Status atual</label><p><span class="badge badge-${lead.status}">${statusLabel(lead.status)}</span></p></div>
+    <div class="adm-field"><label>Telefone / WhatsApp</label><p>${esc(lead.tel)}</p></div>
+    ${lead.email ? `<div class="adm-field"><label>E-mail</label><p>${esc(lead.email)}</p></div>` : ''}
+    <div class="adm-field"><label>Especialidade</label><p>${esc(lead.especialidade)}</p></div>
+    <div class="adm-field"><label>Convênio</label><p>${esc(lead.convenio||'—')}</p></div>
+    ${lead.msg ? `<div class="adm-field"><label>Mensagem</label><p style="white-space:pre-wrap">${esc(lead.msg)}</p></div>` : ''}
+    <div class="adm-field"><label>Recebido em</label><p>${fmtDateFull(lead.createdAt)}</p></div>
+    <div class="adm-modal-actions">
+      <a href="https://wa.me/55${lead.tel.replace(/\D/g,'')}" target="_blank" class="adm-btn-xs abx-green" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:50px;font-size:.8rem;font-weight:600;text-decoration:none;cursor:pointer">📱 WhatsApp</a>
+      ${lead.status!=='contactado'?`<button class="adm-btn-xs abx-gray" onclick="setStatus('${lead.id}','contactado');closeModal()">Marcar contactado</button>`:''}
+      ${lead.status!=='agendado'?`<button class="adm-btn-xs abx-green" onclick="setStatus('${lead.id}','agendado');closeModal()">Marcar agendado</button>`:''}
+      <button class="adm-btn-xs abx-red" onclick="confirmDelete('${lead.id}');closeModal()">Excluir</button>
+    </div>
+  `;
+  document.getElementById('adm-modal').classList.add('open');
+}
+function closeModal(){ document.getElementById('adm-modal').classList.remove('open'); }
+document.getElementById('adm-modal').addEventListener('click', e=>{ if(e.target===e.currentTarget) closeModal(); });
+
+/* ---- Export CSV ---- */
+function exportCSV(){
+  const leads = getLeads();
+  if(!leads.length){ toast('Nenhum dado para exportar.'); return; }
+  const cols = ['Nome','Telefone','Email','Especialidade','Convênio','Mensagem','Status','Data'];
+  const rows = leads.map(l=>[l.nome,l.tel,l.email||'',l.especialidade,l.convenio||'',l.msg||'',statusLabel(l.status),fmtDateFull(l.createdAt)].map(v=>`"${String(v).replace(/"/g,'""')}"`).join(','));
+  const csv = '\uFEFF'+[cols.join(','), ...rows].join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+  a.download = `vita_leads_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  toast('CSV exportado com sucesso!');
+}
+
+/* ---- Toast ---- */
+let toastTimer;
+function toast(msg){
+  const el = document.getElementById('toast');
+  el.textContent=msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>el.classList.remove('show'), 3000);
+}
+
+/* ---- Helpers ---- */
+function esc(s){ const d=document.createElement('div'); d.textContent=String(s); return d.innerHTML; }
+function statusLabel(s){ return {novo:'Novo',contactado:'Contactado',agendado:'Agendado'}[s]||s; }
+function fmtDate(iso){
+  const d=new Date(iso);
+  return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'2-digit'})+' '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+}
+function fmtDateFull(iso){
+  return new Date(iso).toLocaleString('pt-BR',{dateStyle:'long',timeStyle:'short'});
+}
+
+/* ----------------------------------------------------------------
+   INIT
+---------------------------------------------------------------- */
+seedDemoLeads();
+// Re-render if admin is already open on page load (e.g. via #admin hash)
+if(document.getElementById('admin-overlay').classList.contains('show')) renderDash();
+</script>
+</body>
+</html>
